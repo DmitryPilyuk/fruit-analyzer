@@ -1,7 +1,6 @@
 import sys
 import os
 import cv2
-from src.fruits import DetectedFruits
 
 def main():
     if len(sys.argv) != 2:
@@ -20,7 +19,7 @@ def main():
 
     try:
         cv_image = cv2.imread(file_path)
-
+        
     except Exception:
         print(f"Error: can't open file '{file_path}'.")
         sys.exit(1)
