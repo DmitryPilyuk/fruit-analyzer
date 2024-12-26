@@ -1,6 +1,7 @@
 from cv2.typing import MatLike
 from abc import abstractmethod
-from fruits import DetectedFruits
+from back.src.fruits import DetectedFruits
+
 
 class AbstractBlock:
     @abstractmethod
@@ -10,5 +11,3 @@ class AbstractBlock:
     @abstractmethod
     def get_result() -> DetectedFruits:
         pass
-
-    
