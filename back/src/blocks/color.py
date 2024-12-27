@@ -8,8 +8,6 @@ from back.src.blocks.abstract_block import AbstractBlock
 from back.src.blocks.utils import get_limits
 from back.src.fruits import DetectedFruits
 
-img = cv2.imread(os.path.join(".", "grape_image.jpg"))
-
 
 @dataclass
 class Color:
