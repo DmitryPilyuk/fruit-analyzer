@@ -1,4 +1,5 @@
 using FruitAnalyzerFront.Components;
+using Radzen;
 
 namespace FruitAnalyzerFront
 {
@@ -12,21 +13,18 @@ namespace FruitAnalyzerFront
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
-            var app = builder.Build();
+            // Now app Radzen Components can be used in App 
+            builder.Services.AddRadzenComponents();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Error");
-            }
+            var webApp = builder.Build();
 
-            app.UseStaticFiles();
-            app.UseAntiforgery();
+            webApp.UseStaticFiles();
+            webApp.UseAntiforgery();
 
-            app.MapRazorComponents<App>()
+            webApp.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
 
-            app.Run();
+            webApp.Run();
         }
     }
 }
