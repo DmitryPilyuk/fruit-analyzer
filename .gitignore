@@ -170,3 +170,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# VS
+/.vs
+/front/FruitAnalyzerFront/.vs/FruitAnalyzerFront
+/front/FruitAnalyzerFront/bin/Debug/net8.0
+*.css
+/front/FruitAnalyzerFront/obj
