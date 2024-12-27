@@ -181,3 +181,6 @@ cython_debug/
 # environmet variables
 .envrc
 .env
+
+# code backups
+backup
