@@ -6,8 +6,9 @@ from back.src.fruits import DetectedFruits
 class AbstractBlock:
     @abstractmethod
     def __init__(self, cv_image: MatLike):
-        pass
+        self.cv_image = cv_image
+        self.detected_fruits = DetectedFruits()
 
     @abstractmethod
     def get_result(self) -> DetectedFruits:
-        pass
+        return self.detected_fruits
