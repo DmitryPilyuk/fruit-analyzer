@@ -1,4 +1,4 @@
-using FruitAnalyzerFront.Components;
+using FruitAnalyzerFront.Blazor;
 using Radzen;
 
 namespace FruitAnalyzerFront

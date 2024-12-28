@@ -1,0 +1,56 @@
+@namespace FruitComponent
+@rendermode InteractiveServer
+
+<RadzenChart SeriesClick=@OnSeriesClick 
+    Style="position: relative; display: flex; width: 400px; height: 400px; margin-top: 50px">
+    <RadzenPieSeries Fills=@(new [] { "#E9D66B", "#FF0800", "#9F8170", "#9966CC", "#E25822" })
+                     Data="@revenue" 
+            Title="Probability" 
+            CategoryProperty="Fruit" 
+        ValueProperty="Probability">
+
+        </RadzenPieSeries>
+        <RadzenValueAxis Max="100" Min="0"></RadzenValueAxis>
+        <RadzenLegend Position="Radzen.Blazor.LegendPosition.Top" Visible="true"></RadzenLegend>
+</RadzenChart>
+
+ @code {
+     void OnSeriesClick(SeriesClickEventArgs args)
+     {
+         // console.Log(args);
+     }
+
+     class DataItem
+     {
+         public string Fruit { get; set; }
+         public double Probability { get; set; }
+     }
+
+     DataItem[] revenue = new DataItem[] {
+         new DataItem
+         {
+             Fruit = "Banana",
+             Probability = 50
+         },
+         new DataItem
+         {
+             Fruit = "Apple",
+             Probability = 20
+         },
+         new DataItem
+         {
+             Fruit = "Pineapple",
+             Probability = 20
+         },
+         new DataItem
+         {
+             Fruit = "Grape",
+             Probability = 5
+         },
+         new DataItem
+         {
+             Fruit = "Orange",
+             Probability = 5
+         }
+     };
+ }
