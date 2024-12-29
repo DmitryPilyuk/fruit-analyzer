@@ -11,7 +11,7 @@ class DetectedFruits:
     Pineapple: bool = False
 
 
-def estimate_fruit_probability(*detected_list: List[DetectedFruits]) -> Dict[str, str]:
+def estimate_fruit_probability(detected_list: List[DetectedFruits]) -> Dict[str, str]:
     """Calculates the probability of each fruit being detected across a list of DetectedFruits instances.
 
     Args:
