@@ -1,7 +1,7 @@
 @namespace FruitComponent
 @rendermode InteractiveServer
 
-<RadzenChart SeriesClick=@OnSeriesClick 
+<RadzenChart Visible=@visible SeriesClick=@OnSeriesClick 
     Style="position: relative; display: flex; width: 400px; height: 400px; margin-top: 50px">
     <RadzenPieSeries Fills=@(new [] { "#E9D66B", "#FF0800", "#9F8170", "#9966CC", "#E25822" })
                      Data="@revenue" 
@@ -19,6 +19,9 @@
      {
          // console.Log(args);
      }
+
+    [Parameter, EditorRequired]
+    public bool visible { get; set; } = true;
 
      class DataItem
      {

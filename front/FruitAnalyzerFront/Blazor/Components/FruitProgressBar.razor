@@ -1,0 +1,21 @@
+﻿@namespace FruitComponent
+@rendermode InteractiveServer
+
+<div class="rz-m-12">
+    <RadzenProgressBar @bind-Value="@value" Visible="@visible" ProgressBarStyle="Radzen.ProgressBarStyle.Secondary" Style="background-color: var(--rz-secondary-lighter)" />
+</div>
+
+<style>
+    .rz-progressbar-label-value {
+        color: var(--rz-secondary);
+    }
+</style>
+
+@code {
+
+    [Parameter, EditorRequired]
+    public double value { get; set; } = 55.0;
+
+    [Parameter, EditorRequired]
+    public bool visible { get; set; } = true;
+}

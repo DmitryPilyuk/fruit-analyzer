@@ -1,14 +1,21 @@
 ﻿@page "/"
 @using FruitComponent
+@using FruitAnalyzerFront.AppLogic
 
 
-<RadzenRow Style="float: none" AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.Center">
+<RadzenColumn AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.Center">
 
 	<FruitUploader />
-	<FruitChart />
+	<FruitProgressBar visible=@getProgressBarVisibility() value="15" />
+	<FruitAnalyzeButton visible=@getAnalyzeButtunVisibility() onClick=@(args => Console.WriteLine("123")) />
+	<FruitChart visible=@getChartVisibility() />
 
-</RadzenRow>
+</RadzenColumn>
 
 @code {
+	private ImageStatus currentImageStatus = ImageStatus.Missing;
 
+	public bool getProgressBarVisibility() => currentImageStatus == ImageStatus.Uploading;
+	public bool getAnalyzeButtunVisibility() => currentImageStatus == ImageStatus.Uploaded;
+	public bool getChartVisibility() => currentImageStatus == ImageStatus.Analyzed;
 }

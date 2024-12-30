@@ -1,0 +1,11 @@
+﻿@namespace FruitComponent
+
+<RadzenButton Variant="Variant.Filled" Visible=@visible Click=@onClick Text="Analyze!" ButtonStyle="ButtonStyle.Secondary" Style="border-radius: 15px; width: 10%" />
+
+@code {
+	[Parameter, EditorRequired]
+	public EventCallback<MouseEventArgs> onClick { get; set; }
+
+	[Parameter, EditorRequired]
+	public bool visible { get; set; } = true;
+}
