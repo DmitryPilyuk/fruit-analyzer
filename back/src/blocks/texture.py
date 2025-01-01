@@ -3,7 +3,7 @@ import cv2
 from back.src.blocks.color import AbstractBlock
 
 
-class TextureBlock(AbstractBlock):
+class SmoothTextureBlock(AbstractBlock):
     def __init__(self, cv_image):
         super().__init__(cv_image)
         self.__variance = self.__count_variance()
