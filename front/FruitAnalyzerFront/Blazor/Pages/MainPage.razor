@@ -1,21 +1,57 @@
 ﻿@page "/"
 @using FruitComponent
 @using FruitAnalyzerFront.AppLogic
+@rendermode InteractiveServer
 
+<RadzenStack AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.Center" Wrap="Radzen.FlexWrap.Wrap" Style="width: 100%; height: 800px">
+	<FruitUploader onUpload=@onImageUploadProgress />
+	<FruitProgressBar visible=@getProgressBarVisibility() value=@getProgressBarValue() />
+	<FruitAnalyzeButton visible=@getAnalyzeButtunVisibility() onClick=@onAnalyzeButtonClick />
+	<RadzenRow AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.SpaceEvenly">
+		<FruitChart visible=@getResultsVisibility() />
+		<FruitResultCard visible=@getResultsVisibility() imagePath="https://cdn.tveda.ru/thumbs/a52/a52a6e9f0e86f9c6ab0e026182a45350/ec53e12f3a2269480f32cf9e46b5ee68.jpg" fruitName="Banana" fruitDescription="Bananas are elongated, slightly curved fruits with a sweet, creamy flesh and a yellow peel when ripe. They are a popular source of potassium and fiber, often enjoyed as a quick snack or ingredient in various dishes." />
+	</RadzenRow>
 
-<RadzenColumn AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.Center">
-
-	<FruitUploader />
-	<FruitProgressBar visible=@getProgressBarVisibility() value="15" />
-	<FruitAnalyzeButton visible=@getAnalyzeButtunVisibility() onClick=@(args => Console.WriteLine("123")) />
-	<FruitChart visible=@getChartVisibility() />
-
-</RadzenColumn>
+</RadzenStack>
 
 @code {
 	private ImageStatus currentImageStatus = ImageStatus.Missing;
+	private int currentImageUploadingProgress = 0;
 
-	public bool getProgressBarVisibility() => currentImageStatus == ImageStatus.Uploading;
+	public bool getProgressBarVisibility() => 
+	currentImageStatus == ImageStatus.Uploading || currentImageStatus == ImageStatus.Uploaded;
+	public int getProgressBarValue() => currentImageUploadingProgress;
 	public bool getAnalyzeButtunVisibility() => currentImageStatus == ImageStatus.Uploaded;
-	public bool getChartVisibility() => currentImageStatus == ImageStatus.Analyzed;
+	public bool getResultsVisibility() => currentImageStatus == ImageStatus.Analyzed;
+
+	private void onImageUploadComplete(FileInfo imageInfo) 
+	{
+		// TODO FIX IT
+		this.currentImageStatus = ImageStatus.Uploaded;
+		Console.WriteLine("here 2");
+	}
+
+	public void onImageUploadProgress(UploadProgressArgs args)
+	{
+		this.currentImageStatus = ImageStatus.Uploading;
+		this.currentImageUploadingProgress = args.Progress;
+		Console.WriteLine("here 1 " + args.Progress);
+
+		if (args.Progress == 100)
+		{
+			foreach (var file in args.Files)
+			{
+				this.onImageUploadComplete(file);
+			}
+		}
+	}
+
+	public void onAnalyzeButtonClick(MouseEventArgs args) 
+	{
+		// *WORK*
+		Console.WriteLine("here 3");
+		this.currentImageUploadingProgress = 0;
+		this.currentImageStatus = ImageStatus.Analyzed;
+	}
+
 }

@@ -1,14 +1,13 @@
 @namespace FruitComponent
 @rendermode InteractiveServer
 
-<RadzenUpload id="ddUpload" @ref="uploadDD"
-ChooseText="Drag and drop your fruit here" 
-Complete=@((args) => Console.WriteLine("123"))
-Progress=@OnProgress
+<RadzenUpload id="ddUpload"
+ChooseText="Drag and drop your fruit here"
+Progress=@onUpload
 Auto="true" 
 Multiple="false"
 Accept="image/*"
-Url="upload/multiple" 
+Url="upload/single" 
 InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})"
 Style="width: 100%; position: relative; border: 2px dashed var(--rz-secondary); border-radius: 5px;" />
 
@@ -33,21 +32,7 @@ Style="width: 100%; position: relative; border: 2px dashed var(--rz-secondary); 
 
 
 @code {
-    RadzenUpload upload;
-    RadzenUpload uploadDD;
 
-    void OnComplete(UploadCompleteEventArgs args)
-    {
-        Console.WriteLine("123");
-    }
-
-    void OnProgress(UploadProgressArgs args)
-    {
-        if (args.Progress == 100)
-        {
-            foreach (var file in args.Files)
-            {
-            }
-        }
-    }
+    [Parameter, EditorRequired]
+    public EventCallback<UploadProgressArgs> onUpload { get; set; }
 }
