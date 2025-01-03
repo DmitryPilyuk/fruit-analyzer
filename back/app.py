@@ -36,7 +36,7 @@ async def upload_image(image: Annotated[UploadFile, File()]):
     image_path = IMAGE_STORAGE + image.filename
 
     if os.path.exists(image_path):
-        return error("File already exists!")
+        os.remove(image_path)
 
     image_bytes = await image.read()  # Read content
 
@@ -44,15 +44,18 @@ async def upload_image(image: Annotated[UploadFile, File()]):
         binary_file.write(image_bytes)
 
     return {
-        "file_size": len(image_bytes),
-        "file_name": image.filename,
-        "content_type": image.content_type,
+        "FileSize": len(image_bytes),
+        "FileName": image.filename,
+        "ContentType": image.content_type,
     }
 
 
 @app.get("/analyzeimage/{image_name}")
 def analyze_image(image_name: str):
     image_path = IMAGE_STORAGE + image_name
+
+    if not os.path.exists(image_path):
+        return error(f"Can't find file \"{image_path}\"")
 
     # TODO move it into a separate function instead of main.py file
     test_fruits_list = [
@@ -65,7 +68,7 @@ def analyze_image(image_name: str):
 
 
 def error(msg):
-    return {"error": msg}
+    return {"ErrorMessage": msg}
 
 
 IMAGE_STORAGE = "images/"
