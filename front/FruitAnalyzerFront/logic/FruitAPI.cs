@@ -1,7 +1,6 @@
-﻿using System;
-using System.Text.Json;
+﻿using System.Text.Json;
 
-namespace FruitAnalyzerFront.logic
+namespace FruitAnalyzerFront.AppLogic
 {
     public class UploadedFileData
     {
@@ -23,7 +22,7 @@ namespace FruitAnalyzerFront.logic
         public required string ErrorMessage { get; set; }
     }
 
-    public class APIException : Exception 
+    public class APIException : Exception
     {
         public APIException(string message) : base(message) { }
     }
@@ -37,7 +36,7 @@ namespace FruitAnalyzerFront.logic
 
         private const string FORM_DATA_IMAGE_KEY = "image";
 
-        public static async Task<bool> UploadImage(byte[] imageBytes, string imageName)
+        public static async Task UploadImage(byte[] imageBytes, string imageName)
         {
             using (var client = new HttpClient())
             {
@@ -53,15 +52,15 @@ namespace FruitAnalyzerFront.logic
                         var responseJson = await ReadAPIResponseAsync<UploadedFileData>(message);
 
                         if (responseJson.FileSize == imageBytes.Length && responseJson.FileName == imageName)
-                            return true;
+                            return;
                         else
-                            return false;
+                            throw new APIException("Receive incorrect image data");
                     }
                 }
             }
         }
 
-        public static async Task<FruitProbabilityData> AnalyzeFruit(string imageName) 
+        public static async Task<FruitProbabilityData> AnalyzeFruit(string imageName)
         {
             using (var client = new HttpClient())
             {
