@@ -4,54 +4,61 @@
 @rendermode InteractiveServer
 
 <RadzenStack AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.Center" Wrap="Radzen.FlexWrap.Wrap" Style="width: 100%; height: 800px">
-	<FruitUploader onUpload=@onImageUploadProgress />
-	<FruitProgressBar visible=@getProgressBarVisibility() value=@getProgressBarValue() />
+	<RadzenColumn Style="width: 100%; position: relative; text-align: center">
+	<FruitUploader onCancel=@onImageCancel onUpload=@onImageUpload />
 	<FruitAnalyzeButton visible=@getAnalyzeButtunVisibility() onClick=@onAnalyzeButtonClick />
 	<RadzenRow AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.SpaceEvenly">
 		<FruitChart visible=@getResultsVisibility() />
-		<FruitResultCard visible=@getResultsVisibility() imagePath="https://cdn.tveda.ru/thumbs/a52/a52a6e9f0e86f9c6ab0e026182a45350/ec53e12f3a2269480f32cf9e46b5ee68.jpg" fruitName="Banana" fruitDescription="Bananas are elongated, slightly curved fruits with a sweet, creamy flesh and a yellow peel when ripe. They are a popular source of potassium and fiber, often enjoyed as a quick snack or ingredient in various dishes." />
+		<FruitResultCard visible=@getResultsVisibility() fruitName="Banana" fruitProbability=55.5 />
 	</RadzenRow>
+	</RadzenColumn>
 
 </RadzenStack>
 
 @code {
-	private ImageStatus currentImageStatus = ImageStatus.Missing;
-	private int currentImageUploadingProgress = 0;
+	string currentImageName { get; set; } = "";
+	ImageStatus currentImageStatus = ImageStatus.Missing;
 
-	public bool getProgressBarVisibility() => 
-	currentImageStatus == ImageStatus.Uploading || currentImageStatus == ImageStatus.Uploaded;
-	public int getProgressBarValue() => currentImageUploadingProgress;
-	public bool getAnalyzeButtunVisibility() => currentImageStatus == ImageStatus.Uploaded;
-	public bool getResultsVisibility() => currentImageStatus == ImageStatus.Analyzed;
+	bool getAnalyzeButtunVisibility() => currentImageStatus == ImageStatus.Uploaded;
+	bool getResultsVisibility() => this.currentImageStatus == ImageStatus.Analyzed;
 
-	private void onImageUploadComplete(FileInfo imageInfo) 
+	void onImageCancel(UploadChangeEventArgs args)
 	{
-		// TODO FIX IT
-		this.currentImageStatus = ImageStatus.Uploaded;
-		Console.WriteLine("here 2");
+		this.currentImageStatus = ImageStatus.Missing;
+		this.currentImageName = "";
 	}
 
-	public void onImageUploadProgress(UploadProgressArgs args)
+	async Task onImageUpload(UploadChangeEventArgs args) 
 	{
 		this.currentImageStatus = ImageStatus.Uploading;
-		this.currentImageUploadingProgress = args.Progress;
-		Console.WriteLine("here 1 " + args.Progress);
 
-		if (args.Progress == 100)
+		var file = args.Files.First();
+
+		this.currentImageName = file.Name;
+
+		using (var fileStream = file.OpenReadStream())
 		{
-			foreach (var file in args.Files)
+			using (var ms = new MemoryStream())
 			{
-				this.onImageUploadComplete(file);
+				await fileStream.CopyToAsync(ms);
+
+				byte[] fileBytes = ms.ToArray();
+
+				// await FruitAPI.UploadImage(fileBytes, this.currentImageName);
 			}
 		}
+
+		this.currentImageStatus = ImageStatus.Uploaded;
 	}
 
-	public void onAnalyzeButtonClick(MouseEventArgs args) 
+	void onAnalyzeButtonClick(MouseEventArgs args)
 	{
-		// *WORK*
-		Console.WriteLine("here 3");
-		this.currentImageUploadingProgress = 0;
+		// var fruitData = await FruitAPI.AnalyzeFruit(this.currentImageName);
+
+		Console.WriteLine("Change visibility");
 		this.currentImageStatus = ImageStatus.Analyzed;
+		this.currentImageName = "";
+		StateHasChanged();
 	}
 
 }

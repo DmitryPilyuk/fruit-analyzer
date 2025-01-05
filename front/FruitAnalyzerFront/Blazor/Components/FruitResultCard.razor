@@ -1,22 +1,19 @@
 ﻿@namespace FruitComponent
 
-<RadzenCard class="rz-shadow-3" Style="width: 30%; background-color: var(--rz-secondary)" Visible=@visible>
+<RadzenCard class="rz-shadow-4 rz-border-radius-4" Style="width: 30%; background-color: var(--rz-secondary)" Visible=@visible>
     <RadzenRow JustifyContent="JustifyContent.Start" class="rz-p-4">
-        @* <RadzenImage Path=@imagePath Style="width: 100px; height: 100px; border-radius: 50%;" /> *@
         <RadzenColumn>
-            <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">Fruit</RadzenText>
-            <RadzenText TextStyle="TextStyle.H3"><b>@fruitName</b></RadzenText>
-            <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Description</RadzenText>
-            <RadzenText TextStyle="TextStyle.Body1"><b>@fruitDescription</b></RadzenText>
+            <RadzenText TextStyle="TextStyle.DisplayH3"><b><u>@fruitName</u></b></RadzenText>
+            <RadzenText TextStyle="TextStyle.DisplayH4"><b>@getProbabilityString()</b></RadzenText>
         </RadzenColumn>
     </RadzenRow>
 </RadzenCard>
 
 <style>
     .shadows div {
-        padding: 1rem;
-        width: 10rem;
-        text-align: center;
+    padding: 1rem;
+    width: 10rem;
+    text-align: center;
     }
 </style>
 
@@ -25,11 +22,15 @@
     public bool visible { get; set; } = true;
 
     [Parameter, EditorRequired]
-    public string imagePath { get; set; } = "";
-
-    [Parameter, EditorRequired]
     public string fruitName { get; set; } = "";
 
     [Parameter, EditorRequired]
-    public string fruitDescription { get; set; } = "";
+    public double fruitProbability { get; set; }
+
+    string getProbabilityString() 
+    {
+        var roundProbability = (int) Double.Round(this.fruitProbability);
+
+        return $"{roundProbability}%";
+    }
 }
