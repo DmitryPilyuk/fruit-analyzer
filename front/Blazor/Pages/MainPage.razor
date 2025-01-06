@@ -4,8 +4,8 @@
 @using FruitAnalyzerFront.Blazor.Scripts
 @rendermode InteractiveServer
 
-<RadzenStack AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.Center" Wrap="Radzen.FlexWrap.Wrap" Style="width: 100%; height: 800px">
-	<RadzenColumn Style="width: 100%; position: relative; text-align: center">
+<RadzenStack AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.Center" Wrap="Radzen.FlexWrap.Wrap" Style="width: 100%; height: 100vh">
+	<RadzenColumn Style="width: 100%; height: auto; position: relative; text-align: center">
 		<FruitUploader onCancel=@onImageCancel onUpload=@onImageUpload />
 		<FruitAnalyzeButton visible=@getAnalyzeButtunVisibility() onClick=@onAnalyzeButtonClick />
 		<RadzenRow AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.SpaceEvenly">
