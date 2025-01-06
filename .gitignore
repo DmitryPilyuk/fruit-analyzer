@@ -175,6 +175,5 @@ cython_debug/
 /.vs
 /front/FruitAnalyzerFront/.vs/FruitAnalyzerFront
 /front/FruitAnalyzerFront/bin/Debug/net8.0
-*.css
 /front/FruitAnalyzerFront/obj
 /front/FruitAnalyzerFront/.vs/ProjectEvaluation
