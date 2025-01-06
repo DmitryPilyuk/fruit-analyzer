@@ -1,23 +1,30 @@
 ﻿@page "/"
 @using FruitComponent
 @using FruitAnalyzerFront.AppLogic
+@using FruitAnalyzerFront.Blazor.Scripts
 @rendermode InteractiveServer
 
 <RadzenStack AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.Center" Wrap="Radzen.FlexWrap.Wrap" Style="width: 100%; height: 800px">
 	<RadzenColumn Style="width: 100%; position: relative; text-align: center">
-	<FruitUploader onCancel=@onImageCancel onUpload=@onImageUpload />
-	<FruitAnalyzeButton visible=@getAnalyzeButtunVisibility() onClick=@onAnalyzeButtonClick />
-	<RadzenRow AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.SpaceEvenly">
-		<FruitChart visible=@getResultsVisibility() />
-		<FruitResultCard visible=@getResultsVisibility() fruitName="Banana" fruitProbability=55.5 />
-	</RadzenRow>
+		<FruitUploader onCancel=@onImageCancel onUpload=@onImageUpload />
+		<FruitAnalyzeButton visible=@getAnalyzeButtunVisibility() onClick=@onAnalyzeButtonClick />
+		<RadzenRow AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.SpaceEvenly">
+			<FruitChart visible=@getResultsVisibility() chartColors=@currentChartColors chartItems=@currentChartItems />
+			<FruitResultCard visible=@getResultsVisibility() fruitName=@recognyzedFruitName fruitProbability=@recognyzedFruitProbability />
+		</RadzenRow>
 	</RadzenColumn>
 
 </RadzenStack>
 
 @code {
-	string currentImageName { get; set; } = "";
+	string currentImageName { get; set; } = String.Empty;
 	ImageStatus currentImageStatus = ImageStatus.Missing;
+
+	FruitChart.FruitChartItem[] currentChartItems { get; set; } = Array.Empty<FruitChart.FruitChartItem>();
+	string[] currentChartColors { get; set; } = Array.Empty<string>();
+
+	string recognyzedFruitName { get; set; } = String.Empty;
+	double recognyzedFruitProbability { get; set; }
 
 	bool getAnalyzeButtunVisibility() => currentImageStatus == ImageStatus.Uploaded;
 	bool getResultsVisibility() => this.currentImageStatus == ImageStatus.Analyzed;
@@ -25,7 +32,7 @@
 	void onImageCancel(UploadChangeEventArgs args)
 	{
 		this.currentImageStatus = ImageStatus.Missing;
-		this.currentImageName = "";
+		this.currentImageName = String.Empty;
 	}
 
 	async Task onImageUpload(UploadChangeEventArgs args) 
@@ -44,21 +51,26 @@
 
 				byte[] fileBytes = ms.ToArray();
 
-				// await FruitAPI.UploadImage(fileBytes, this.currentImageName);
+				await FruitAPI.UploadImage(fileBytes, this.currentImageName);
 			}
 		}
 
 		this.currentImageStatus = ImageStatus.Uploaded;
 	}
 
-	void onAnalyzeButtonClick(MouseEventArgs args)
+	async Task onAnalyzeButtonClick(MouseEventArgs args)
 	{
-		// var fruitData = await FruitAPI.AnalyzeFruit(this.currentImageName);
+		var fruitData = await FruitAPI.AnalyzeFruit(this.currentImageName);
 
-		Console.WriteLine("Change visibility");
+		this.currentChartItems = fruitData.ToFruitChartItems();
+		this.currentChartColors = currentChartItems.ToColorArray();
+
+		var recognyzedFruit = currentChartItems.FindFruitWithMaxProbability();
+
+		this.recognyzedFruitName = recognyzedFruit.Fruit;
+		this.recognyzedFruitProbability = recognyzedFruit.Probability;
+
 		this.currentImageStatus = ImageStatus.Analyzed;
-		this.currentImageName = "";
-		StateHasChanged();
 	}
 
 }

@@ -2,53 +2,31 @@
 @rendermode InteractiveServer
 
 <RadzenChart Visible=@visible
-    Style="width: 35%; height: 350px; margin-top: 3%">
-    <RadzenPieSeries Fills=@(new [] { "#E9D66B", "#FF0800", "#9F8170", "#9966CC", "#E25822" })
-                     Data="@revenue" 
-            Title="Probability" 
-            CategoryProperty="Fruit" 
-        ValueProperty="Probability">
+Style="width: 35%; height: 350px; margin-top: 3%">
+    <RadzenPieSeries Fills=@chartColors
+    Data="@chartItems" 
+    Title="Probability" 
+    CategoryProperty="Fruit" 
+    ValueProperty="Probability">
 
-        </RadzenPieSeries>
-        <RadzenValueAxis Max="100" Min="0"></RadzenValueAxis>
-        <RadzenLegend Position="Radzen.Blazor.LegendPosition.Top" Visible="true"></RadzenLegend>
+    </RadzenPieSeries>
+    <RadzenValueAxis Max="100" Min="0"></RadzenValueAxis>
+    <RadzenLegend Position="Radzen.Blazor.LegendPosition.Top" Visible="true"></RadzenLegend>
 </RadzenChart>
 
- @code {
+@code {
+    public struct FruitChartItem
+    {
+        public string Fruit { get; set; }
+        public double Probability { get; set; }
+    }
+
     [Parameter, EditorRequired]
     public bool visible { get; set; } = true;
 
-     class DataItem
-     {
-         public string Fruit { get; set; }
-         public double Probability { get; set; }
-     }
+    [Parameter, EditorRequired]
+    public required string[] chartColors { get; set; }
 
-     DataItem[] revenue = new DataItem[] {
-         new DataItem
-         {
-             Fruit = "Banana",
-             Probability = 50
-         },
-         new DataItem
-         {
-             Fruit = "Apple",
-             Probability = 20
-         },
-         new DataItem
-         {
-             Fruit = "Pineapple",
-             Probability = 20
-         },
-         new DataItem
-         {
-             Fruit = "Grape",
-             Probability = 5
-         },
-         new DataItem
-         {
-             Fruit = "Orange",
-             Probability = 5
-         }
-     };
- }
+    [Parameter, EditorRequired]
+    public required FruitChartItem[] chartItems { get; set; }
+}
