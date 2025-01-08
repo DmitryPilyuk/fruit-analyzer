@@ -1,15 +1,13 @@
 # Fruit Analyzer
 
 ## Запуск
-По умолчанию запускает на *http://127.0.0.1:5000*.
+По умолчанию запускается на *http://127.0.0.1:5000*.
 
 ### Front
-[.NET](https://learn.microsoft.com/ru-ru/dotnet/core/install/linux-ubuntu-install?tabs=dotnet8&pivots=os-linux-ubuntu-2410)
 ```
 sudo apt-get update && \
   sudo apt-get install -y dotnet-sdk-8.0
 ```
-App
 ```
 cd front\
 dotnet publish . -a x64
