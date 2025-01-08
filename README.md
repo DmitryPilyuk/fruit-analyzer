@@ -1,6 +1,8 @@
 # Fruit Analyzer
 
 ## Запуск
+По умолчанию запускает на *http://127.0.0.1:5000*.
+
 ### Front
 [.NET](https://learn.microsoft.com/ru-ru/dotnet/core/install/linux-ubuntu-install?tabs=dotnet8&pivots=os-linux-ubuntu-2410)
 ```
@@ -21,4 +23,3 @@ source .venv/bin/activate
 pip install -r requirements.txt
 fastapi dev app.py
 ```
-Запускается на *http://127.0.0.1:8000*.
