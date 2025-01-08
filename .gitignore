@@ -1,3 +1,5 @@
+bin/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -170,3 +172,15 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# VS
+/.vs
+/front/FruitAnalyzerFront/.vs/FruitAnalyzerFront
+/front/FruitAnalyzerFront/bin/Debug/net8.0
+/front/FruitAnalyzerFront/obj
+/front/FruitAnalyzerFront/.vs/ProjectEvaluation
+/front/FruitAnalyzerFront/.vs
+/front/.config
+/front/.vs
+/front/bin
+/front/obj

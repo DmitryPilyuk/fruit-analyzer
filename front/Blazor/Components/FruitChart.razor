@@ -1,0 +1,32 @@
+@namespace FruitComponent
+@rendermode InteractiveServer
+
+<RadzenChart Visible=@visible
+Style="width: 35%; height: 350px; margin-top: 3%">
+    <RadzenPieSeries Fills=@chartColors
+    Data="@chartItems" 
+    Title="Probability" 
+    CategoryProperty="Fruit" 
+    ValueProperty="Probability">
+
+    </RadzenPieSeries>
+    <RadzenValueAxis Max="100" Min="0"></RadzenValueAxis>
+    <RadzenLegend Position="Radzen.Blazor.LegendPosition.Top" Visible="true"></RadzenLegend>
+</RadzenChart>
+
+@code {
+    public struct FruitChartItem
+    {
+        public string Fruit { get; set; }
+        public double Probability { get; set; }
+    }
+
+    [Parameter, EditorRequired]
+    public bool visible { get; set; } = true;
+
+    [Parameter, EditorRequired]
+    public required string[] chartColors { get; set; }
+
+    [Parameter, EditorRequired]
+    public required FruitChartItem[] chartItems { get; set; }
+}

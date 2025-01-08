@@ -1,16 +1,17 @@
 from dataclasses import dataclass
 from typing import List, Dict
 
+
 @dataclass
 class DetectedFruits:
     Banana: bool = False
     Apple: bool = False
     Grapes: bool = False
-    Orange: bool = False 
+    Orange: bool = False
     Pineapple: bool = False
 
 
-def estimate_fruit_probability(*detected_list: List[DetectedFruits]) -> Dict[str, str]:
+def estimate_fruit_probability(detected_list: List[DetectedFruits]) -> Dict[str, str]:
     """Calculates the probability of each fruit being detected across a list of DetectedFruits instances.
 
     Args:
@@ -22,7 +23,7 @@ def estimate_fruit_probability(*detected_list: List[DetectedFruits]) -> Dict[str
     if not detected_list or len(detected_list) == 0:
         return {}
 
-    total_instances = 0 # count of recognized fruits
+    total_instances = 0  # count of recognized fruits
 
     # dict with every fruit count
     fruit_counts = {field: 0 for field in DetectedFruits.__annotations__}
