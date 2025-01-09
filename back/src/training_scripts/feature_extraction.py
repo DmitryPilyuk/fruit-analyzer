@@ -156,16 +156,16 @@ def extract_color_features(image):
 
 
 def feature_group_to_extraction_function(feature_group: FeatureGroups):
-    match feature_group:
-        case FeatureGroups.TEXTURE:
+    match feature_group.value:
+        case FeatureGroups.TEXTURE.value:
             return extract_texture_features
-        case FeatureGroups.STRUCTURE:
+        case FeatureGroups.STRUCTURE.value:
             return extract_structure_features
-        case FeatureGroups.SHAPE:
+        case FeatureGroups.SHAPE.value:
             return extract_shape_features
-        case FeatureGroups.LEAF:
+        case FeatureGroups.LEAF.value:
             return extract_leaf_features
-        case FeatureGroups.COLOR:
+        case FeatureGroups.COLOR.value:
             return extract_color_features
 
 
@@ -173,10 +173,11 @@ def extract_features(image_path, feature_groups: FeatureGroups):
     """
     Extract features from the image
     """
+
     image = cv2.imread(image_path)
     image = cv2.resize(image, (300, 300))
 
-    if feature_groups == FeatureGroups.ALL:
+    if feature_groups.value == FeatureGroups.ALL.value:
         texture_features = extract_texture_features(image)
         shape_features = extract_shape_features(image)
         structure_features = extract_structure_features(image)
