@@ -30,8 +30,17 @@ namespace FruitAnalyzerFront.Blazor.Scripts
                     case "pineapple":
                         resultColors.Add("#ffbd35");
                         break;
+                    case "kiwi":
+                        resultColors.Add("#61ab5a");
+                        break;
+                    case "watermelon":
+                        resultColors.Add("#fd6f7d");
+                        break;
+                    case "pomegranate":
+                        resultColors.Add("#8f163f");
+                        break;
                     default:
-                        throw new Exception("Can't recognize fruit color!");
+                        throw new Exception($"Can't recognize fruit \"{item.Fruit}\" color!");
                 }
             }
 

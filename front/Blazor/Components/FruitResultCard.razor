@@ -1,6 +1,6 @@
 ﻿@namespace FruitComponent
 
-<RadzenCard class="rz-shadow-4 rz-border-radius-4" Style="width: 30%; background-color: var(--rz-secondary)" Visible=@visible>
+<RadzenCard class="rz-shadow-4 rz-border-radius-4" Style="width: 50%; background-color: var(--rz-secondary)" Visible=@visible>
     <RadzenRow JustifyContent="JustifyContent.Start" class="rz-p-4">
         <RadzenColumn>
             <RadzenText TextStyle="TextStyle.DisplayH3"><b><u>@fruitName</u></b></RadzenText>
@@ -14,6 +14,10 @@
     padding: 1rem;
     width: 10rem;
     text-align: center;
+    }
+
+    .rz-text-display-h3, .rz-text-display-h4 {
+        color: var(--rz-white);
     }
 </style>
 

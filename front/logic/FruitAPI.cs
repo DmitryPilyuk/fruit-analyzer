@@ -4,22 +4,45 @@ namespace FruitAnalyzerFront.AppLogic
 {
     public class UploadedFileData
     {
-        public int FileSize { get; set; }
-        public required string FileName { get; set; }
-        public required string ContentType { get; set; }
+        /// <summary>
+        /// Decoded API-response file data
+        /// </summary>
+        public int file_size { get; set; }
+        public required string file_name { get; set; }
+        public required string content_type { get; set; }
     }
     public class FruitProbabilityData
     {
-        public double Banana { get; set; }
-        public double Apple { get; set; }
-        public double Grapes { get; set; }
-        public double Orange { get; set; }
-        public double Pineapple { get; set; }
+        /// <summary>
+        /// Decoded API-response probability data
+        /// </summary>
+        public double apple { get; set; }   
+        public double banana { get; set; }
+        public double grape { get; set; }
+        public double kiwi { get; set; }
+        public double orange { get; set; }
+        public double pineapple { get; set; }
+        public double pomegranate { get; set; }
+        public double watermelon { get; set; }
+
+    }
+
+    public static class AnalyzeModelName
+    {
+        public const string BasicModel = "basic_model";
+        public const string ColorModel = "color_model";
+        public const string LeafModel = "leaf_model";
+        public const string ShapeModel = "shape_model";
+        public const string StructureModel = "structure_model";
+        public const string TextureModel = "texture_model";
     }
 
     public class ErrorResponseData
     {
-        public required string ErrorMessage { get; set; }
+        /// <summary>
+        /// Decoded error API-response
+        /// </summary>
+        public required string error_message { get; set; }
     }
 
     public class APIException : Exception
@@ -51,7 +74,7 @@ namespace FruitAnalyzerFront.AppLogic
 
                         var responseJson = await ReadAPIResponseAsync<UploadedFileData>(message);
 
-                        if (responseJson.FileSize == imageBytes.Length && responseJson.FileName == imageName)
+                        if (responseJson.file_size == imageBytes.Length && responseJson.file_name == imageName)
                             return;
                         else
                             throw new APIException("Receive incorrect image data");
@@ -60,14 +83,14 @@ namespace FruitAnalyzerFront.AppLogic
             }
         }
 
-        public static async Task<FruitProbabilityData> AnalyzeFruit(string imageName)
+        public static async Task<FruitProbabilityData> AnalyzeFruit(string imageName, string modelName)
         {
             using (var client = new HttpClient())
             {
                 using (var content = new MultipartFormDataContent())
                 {
                     using (
-                       var message = await client.GetAsync(GetAnalyzeUri(imageName)))
+                       var message = await client.GetAsync(GetAnalyzeUri(imageName, modelName)))
                     {
 
                         var responseJson = await ReadAPIResponseAsync<FruitProbabilityData>(message);
@@ -78,7 +101,8 @@ namespace FruitAnalyzerFront.AppLogic
             }
         }
 
-        private static string GetAnalyzeUri(string filename) => URI_ANALYZE_IMAGE + filename;
+        private static string GetAnalyzeUri(string filename, string model_name = AnalyzeModelName.BasicModel) => 
+            URI_ANALYZE_IMAGE + filename + '\\' + model_name;
 
         private static async Task<T> ReadAPIResponseAsync<T>(HttpResponseMessage message)
         {
@@ -99,7 +123,7 @@ namespace FruitAnalyzerFront.AppLogic
                 responseStream.Seek(0, SeekOrigin.Begin);
                 var responseErrorJson = await JsonSerializer.DeserializeAsync<ErrorResponseData>(responseStream);
 
-                throw new APIException(responseErrorJson?.ErrorMessage ?? "Can't get error message from response :(");
+                throw new APIException(responseErrorJson?.error_message ?? "Can't get error message from response :(");
             }
         }
 

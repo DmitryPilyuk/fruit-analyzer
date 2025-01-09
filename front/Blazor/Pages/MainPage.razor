@@ -8,9 +8,16 @@
 	<RadzenColumn Style="width: 100%; height: auto; position: relative; text-align: center">
 		<FruitUploader onCancel=@onImageCancel onUpload=@onImageUpload />
 		<FruitAnalyzeButton visible=@getAnalyzeButtunVisibility() onClick=@onAnalyzeButtonClick />
-		<RadzenRow AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.SpaceEvenly">
-			<FruitChart visible=@getResultsVisibility() chartColors=@currentChartColors chartItems=@currentChartItems />
-			<FruitResultCard visible=@getResultsVisibility() fruitName=@recognyzedFruitName fruitProbability=@recognyzedFruitProbability />
+		<RadzenRow AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.SpaceAround">
+			<RadzenColumn>
+				<FruitChart visible=@getResultsVisibility() chartColors=@currentChartColors chartItems=@currentChartItems />
+			</RadzenColumn>
+			<RadzenColumn>
+				<RadzenStack Orientation="Orientation.Vertical" AlignItems="Radzen.AlignItems.Center" JustifyContent="Radzen.JustifyContent.Center">
+					<FruitResultCard visible=@getResultsVisibility() fruitName=@recognyzedFruitName fruitProbability=@recognyzedFruitProbability />
+					<FruitModelSelector visible=@getResultsVisibility() onValueChanged=@onAnalyzeModelSelect />
+				</RadzenStack>
+			</RadzenColumn>
 		</RadzenRow>
 	</RadzenColumn>
 
@@ -26,6 +33,8 @@
 	string recognyzedFruitName { get; set; } = String.Empty;
 	double recognyzedFruitProbability { get; set; }
 
+	string currentAnalyzeModel { get; set; } = AnalyzeModelName.BasicModel;
+
 	bool getAnalyzeButtunVisibility() => currentImageStatus == ImageStatus.Uploaded;
 	bool getResultsVisibility() => this.currentImageStatus == ImageStatus.Analyzed;
 
@@ -33,6 +42,7 @@
 	{
 		this.currentImageStatus = ImageStatus.Missing;
 		this.currentImageName = String.Empty;
+		this.currentAnalyzeModel = AnalyzeModelName.BasicModel;
 	}
 
 	async Task onImageUpload(UploadChangeEventArgs args) 
@@ -60,7 +70,22 @@
 
 	async Task onAnalyzeButtonClick(MouseEventArgs args)
 	{
-		var fruitData = await FruitAPI.AnalyzeFruit(this.currentImageName);
+		await updateResults();
+	}
+
+	async Task onAnalyzeModelSelect(string? value) 
+	{
+		if (value == null)
+			return;
+
+		this.currentAnalyzeModel = value;
+
+		await updateResults();
+	}
+
+	async Task updateResults() 
+	{
+		var fruitData = await FruitAPI.AnalyzeFruit(this.currentImageName, this.currentAnalyzeModel);
 
 		this.currentChartItems = fruitData.ToFruitChartItems();
 		this.currentChartColors = currentChartItems.ToColorArray();
