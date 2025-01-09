@@ -1,4 +1,4 @@
-from back.src.models.training_scripts.model_utils import train_model, save_model
+from src.training_scripts.model_utils import train_model, save_model
 from feature_groups import FeatureGroups
 
 models_dict = {}

@@ -1,4 +1,4 @@
-from back.src.models.training_scripts.model_utils import infer
+from src.training_scripts.model_utils import infer
 from feature_groups import FeatureGroups
 import joblib
 

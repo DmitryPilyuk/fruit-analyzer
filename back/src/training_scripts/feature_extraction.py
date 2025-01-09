@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from skimage.feature import graycomatrix, graycoprops
-from feature_groups import FeatureGroups
+from src.training_scripts.feature_groups import FeatureGroups
 
 
 # === FEATURE EXTRACTION FUNCTIONS ===

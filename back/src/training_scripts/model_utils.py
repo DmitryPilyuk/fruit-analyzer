@@ -1,5 +1,5 @@
-from feature_extraction import extract_features
-from feature_groups import FeatureGroups
+from src.training_scripts.feature_extraction import extract_features
+from src.training_scripts.feature_groups import FeatureGroups
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import GridSearchCV, train_test_split
@@ -89,8 +89,8 @@ def infer(model, image_path, feature_group: FeatureGroups):
     # scaler.fit_transform(features)
     # joblib.dump(scaler, f"../scaler_{feature_group}.pkl")
 
-    label_encoder = joblib.load(f"../label_encoders/labelEncoder_{feature_group}.pkl")
-    scaler = joblib.load(f"../scalers/scaler_{feature_group}.pkl")
+    label_encoder = joblib.load(f"models/label_encoders/labelEncoder_{feature_group}.pkl")
+    scaler = joblib.load(f"models/scalers/scaler_{feature_group}.pkl")
 
     # Normalize features
     feature_vector = scaler.transform([feature_vector])
