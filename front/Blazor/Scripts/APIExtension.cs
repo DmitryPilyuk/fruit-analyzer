@@ -12,7 +12,7 @@ namespace FruitAnalyzerFront.Blazor.Scripts
 
             var resultChartItems = new List<FruitChartItem>();
 
-            resultChartItems.Add(new FruitChartItem { Fruit = "Banana", Probability = CalculateProbability(apiData.banana)});
+            resultChartItems.Add(new FruitChartItem { Fruit = "Banana", Probability = CalculateProbability(apiData.banana) });
             resultChartItems.Add(new FruitChartItem { Fruit = "Apple", Probability = CalculateProbability(apiData.apple) });
             resultChartItems.Add(new FruitChartItem { Fruit = "Grapes", Probability = CalculateProbability(apiData.grape) });
             resultChartItems.Add(new FruitChartItem { Fruit = "Orange", Probability = CalculateProbability(apiData.orange) });
