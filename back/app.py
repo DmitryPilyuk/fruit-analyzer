@@ -44,9 +44,9 @@ async def upload_image(image: Annotated[UploadFile, File()]):
         binary_file.write(image_bytes)
 
     return {
-        "FileSize": len(image_bytes),
-        "FileName": image.filename,
-        "ContentType": image.content_type,
+        "file_size": len(image_bytes),
+        "file_name": image.filename,
+        "content_type": image.content_type,
     }
 
 
@@ -68,7 +68,7 @@ def analyze_image(image_name: str, model_name: str):
 
 
 def error(msg):
-    return {"ErrorMessage": msg}
+    return {"error_message": msg}
 
 
 def convert_name_to_model(model_name: str):
