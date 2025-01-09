@@ -55,13 +55,13 @@ def analyze_image(image_name: str):
     image_path = IMAGE_STORAGE + image_name
 
     if not os.path.exists(image_path):
-        return error(f"Can't find file \"{image_path}\"")
+        return error(f'Can\'t find file "{image_path}"')
 
     # TODO move it into a separate function instead of main.py file
     test_fruits_list = [
         DetectedFruits(Banana=True, Apple=True),
         DetectedFruits(Banana=True, Orange=True),
-        DetectedFruits(Banana=True, Pineapple=True, Grapes=True)
+        DetectedFruits(Banana=True, Pineapple=True, Grapes=True),
     ]
 
     return estimate_fruit_probability(test_fruits_list)
