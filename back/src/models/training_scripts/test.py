@@ -7,7 +7,7 @@ structure_model = joblib.load("../FeatureGroups.STRUCTURE.pkl")
 leaf_model = joblib.load("../FeatureGroups.LEAF.pkl")
 shape_model = joblib.load("../FeatureGroups.SHAPE.pkl")
 texture_model = joblib.load("../FeatureGroups.TEXTURE.pkl")
-high_accuracy_model = joblib.load("../87_leaf_features.pkl")
+high_accuracy_model = joblib.load("../main_model.pkl")
 
 models = {
     color_model: FeatureGroups.COLOR,
