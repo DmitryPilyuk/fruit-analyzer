@@ -4,7 +4,7 @@ from skimage.feature import graycomatrix, graycoprops
 from src.training_scripts.feature_groups import FeatureGroups
 
 
-# === FEATURE EXTRACTION FUNCTIONS ===
+# Feature extraction functions
 def extract_texture_features(image):
     """
     Extract texture features using GLCM (Gray-Level Co-occurrence Matrix).

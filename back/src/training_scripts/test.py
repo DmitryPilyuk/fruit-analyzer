@@ -2,12 +2,12 @@ from src.training_scripts.model_utils import infer
 from feature_groups import FeatureGroups
 import joblib
 
-color_model = joblib.load("../FeatureGroups.COLOR.pkl")
-structure_model = joblib.load("../FeatureGroups.STRUCTURE.pkl")
-leaf_model = joblib.load("../FeatureGroups.LEAF.pkl")
-shape_model = joblib.load("../FeatureGroups.SHAPE.pkl")
-texture_model = joblib.load("../FeatureGroups.TEXTURE.pkl")
-high_accuracy_model = joblib.load("../main_model.pkl")
+color_model = joblib.load("models/FeatureGroups.COLOR.pkl")
+structure_model = joblib.load("models/FeatureGroups.STRUCTURE.pkl")
+leaf_model = joblib.load("models/FeatureGroups.LEAF.pkl")
+shape_model = joblib.load("models/FeatureGroups.SHAPE.pkl")
+texture_model = joblib.load("models/FeatureGroups.TEXTURE.pkl")
+high_accuracy_model = joblib.load("models/main_model.pkl")
 
 models = {
     color_model: FeatureGroups.COLOR,
@@ -19,9 +19,8 @@ models = {
 }
 
 
-# test the model
-TEST_IMAGE_PATH = "/home/alex/dev/uni/classifier/model/test_images/watermelon.jpeg"
-DATASET_PATH = "/home/alex/dev/uni/dataset_v2"
+# test the models
+TEST_IMAGE_PATH = "path/to/test/image"
 
 for model in models:
     feature_group = models[model]

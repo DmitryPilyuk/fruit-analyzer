@@ -80,7 +80,7 @@ def infer(model, image_path, feature_group: FeatureGroups):
     # features, labels = load_dataset(dataset_path, feature_group)
     feature_vector = extract_features(image_path, feature_group)
 
-    # * If labels encoder and scaler are not saved
+    # * If labels encoder and scaler are not saved (provide correct paths to save the label encoder and scaler)
     # label_encoder = LabelEncoder()
     # label_encoder.fit_transform(labels)
     # joblib.dump(label_encoder, f"../labelEncoder_{feature_group}.pkl")

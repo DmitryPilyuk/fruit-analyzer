@@ -2,8 +2,8 @@ from src.training_scripts.model_utils import train_model, save_model
 from feature_groups import FeatureGroups
 
 models_dict = {}
-PATH_TO_SAVE = "../"
-DATA_DIR = "/home/alex/dev/uni/dataset_v2"
+PATH_TO_SAVE = ""  # adjust as needed
+DATA_DIR = "path/to/dataset"
 
 
 for feature_group in FeatureGroups:
