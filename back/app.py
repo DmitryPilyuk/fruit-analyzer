@@ -3,10 +3,8 @@ import pathlib
 import os
 import shutil
 from contextlib import asynccontextmanager
-from src.blocks.color import ColorBlock
 from src.fruits import DetectedFruits, estimate_fruit_probability
 from fastapi import FastAPI, File, UploadFile
-import cv2
 
 
 @asynccontextmanager
