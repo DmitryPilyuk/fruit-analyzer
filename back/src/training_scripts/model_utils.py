@@ -89,7 +89,9 @@ def infer(model, image_path, feature_group: FeatureGroups):
     # scaler.fit_transform(features)
     # joblib.dump(scaler, f"../scaler_{feature_group}.pkl")
 
-    label_encoder = joblib.load(f"models/label_encoders/labelEncoder_{feature_group}.pkl")
+    label_encoder = joblib.load(
+        f"models/label_encoders/labelEncoder_{feature_group}.pkl"
+    )
     scaler = joblib.load(f"models/scalers/scaler_{feature_group}.pkl")
 
     # Normalize features
