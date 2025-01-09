@@ -1,0 +1,35 @@
+﻿@namespace FruitComponent
+@rendermode InteractiveServer
+@using FruitAnalyzerFront.AppLogic
+
+<RadzenDropDown Visible=@visible Data=@models AllowClear=true Placeholder="Select analyze model"
+Style="width: 25%; background-color: var(--rz-secondary)"
+Name="DropDownClear"
+ValueChanged=@onValueChanged/>
+
+<style>
+    .rz-dropdown-label.rz-inputtext.rz-placeholder, 
+    .rz-dropdown-label.rz-inputtext,
+    .notranslate.rz-dropdown-trigger-icon.rzi.rzi-chevron-down,
+    .notranslate.rz-dropdown-clear-icon.rzi.rzi-times {
+    color: var(--rz-white);
+    }
+</style>
+
+@code {
+    [Parameter, EditorRequired]
+    public bool visible { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback<string?> onValueChanged { get; set; }
+
+    IEnumerable<string> models = new string[] 
+    {
+        AnalyzeModelName.BasicModel,
+        AnalyzeModelName.ColorModel,
+        AnalyzeModelName.StructureModel,
+        AnalyzeModelName.LeafModel,
+        AnalyzeModelName.ShapeModel,
+        AnalyzeModelName.TextureModel,
+    };
+}
