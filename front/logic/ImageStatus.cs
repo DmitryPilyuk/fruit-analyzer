@@ -1,6 +1,6 @@
 ﻿namespace FruitAnalyzerFront.AppLogic
 {
-    enum ImageStatus 
+    enum ImageStatus
     {
         Uploading,
         Uploaded,

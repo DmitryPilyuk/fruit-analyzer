@@ -16,7 +16,7 @@ namespace FruitAnalyzerFront.AppLogic
         /// <summary>
         /// Decoded API-response probability data
         /// </summary>
-        public double apple { get; set; }   
+        public double apple { get; set; }
         public double banana { get; set; }
         public double grape { get; set; }
         public double kiwi { get; set; }
@@ -101,7 +101,7 @@ namespace FruitAnalyzerFront.AppLogic
             }
         }
 
-        private static string GetAnalyzeUri(string filename, string model_name = AnalyzeModelName.BasicModel) => 
+        private static string GetAnalyzeUri(string filename, string model_name = AnalyzeModelName.BasicModel) =>
             URI_ANALYZE_IMAGE + filename + '\\' + model_name;
 
         private static async Task<T> ReadAPIResponseAsync<T>(HttpResponseMessage message)
