@@ -49,3 +49,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 fastapi dev app.py
 ```
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
